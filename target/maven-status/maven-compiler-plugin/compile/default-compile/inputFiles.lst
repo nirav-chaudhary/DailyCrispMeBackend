@@ -1,8 +1,0 @@
-/Users/niravchaudhary/Documents/Project/DailyCrispMeBackend/src/main/java/com/example/dailycrispme/DailyCrispMeApplication.java
-/Users/niravchaudhary/Documents/Project/DailyCrispMeBackend/src/main/java/com/example/dailycrispme/model/Author.java
-/Users/niravchaudhary/Documents/Project/DailyCrispMeBackend/src/main/java/com/example/dailycrispme/config/DataInitializer.java
-/Users/niravchaudhary/Documents/Project/DailyCrispMeBackend/src/main/java/com/example/dailycrispme/controller/ArticleController.java
-/Users/niravchaudhary/Documents/Project/DailyCrispMeBackend/src/main/java/com/example/dailycrispme/model/Article.java
-/Users/niravchaudhary/Documents/Project/DailyCrispMeBackend/src/main/java/com/example/dailycrispme/config/CacheConfig.java
-/Users/niravchaudhary/Documents/Project/DailyCrispMeBackend/src/main/java/com/example/dailycrispme/service/InMemoryArticleService.java
-/Users/niravchaudhary/Documents/Project/DailyCrispMeBackend/src/main/java/com/example/dailycrispme/service/ArticleService.java
