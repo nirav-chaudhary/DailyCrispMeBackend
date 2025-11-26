@@ -4,11 +4,17 @@ FROM maven:3.8.5-openjdk-17 AS build
 # Set the working directory
 WORKDIR /app
 
-# Copy the project files
-COPY . .
+# Copy the pom.xml
+COPY pom.xml .
+
+# Download the dependencies
+RUN mvn -B dependency:go-offline
+
+# Copy the source code
+COPY src ./src
 
 # Build the project
-RUN mvn clean install
+RUN mvn -B clean install
 
 # Use a lighter-weight Java runtime
 FROM gcr.io/distroless/java17-debian12

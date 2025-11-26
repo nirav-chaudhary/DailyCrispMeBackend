@@ -1,13 +1,54 @@
 steps:
-# Build the Docker image
+# 1. Pull the builder image for caching (if it exists)
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/dailycrispme', '.']
+  entrypoint: 'bash'
+  args: ['-c', 'docker pull gcr.io/$PROJECT_ID/dailycrispme:builder || exit 0']
+  id: 'pull-builder-cache'
 
-# Push the Docker image to Google Container Registry
+# 2. Pull the latest image for caching (if it exists)
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/dailycrispme']
+  entrypoint: 'bash'
+  args: ['-c', 'docker pull gcr.io/$PROJECT_ID/dailycrispme:latest || exit 0']
+  id: 'pull-latest-cache'
+  waitFor: ['-'] # Run in parallel with pull-builder-cache
 
-# Deploy to Cloud Run
+# 3. Build the builder stage
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '--target', 'build',
+    '-t', 'gcr.io/$PROJECT_ID/dailycrispme:builder',
+    '--cache-from', 'gcr.io/$PROJECT_ID/dailycrispme:builder',
+    '.'
+  ]
+  id: 'build-builder'
+  waitFor: ['pull-builder-cache']
+
+# 4. Build the final image
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-t', 'gcr.io/$PROJECT_ID/dailycrispme:latest',
+    '--cache-from', 'gcr.io/$PROJECT_ID/dailycrispme:builder',
+    '--cache-from', 'gcr.io/$PROJECT_ID/dailycrispme:latest',
+    '.'
+  ]
+  id: 'build-final'
+  waitFor: ['pull-latest-cache', 'build-builder']
+
+# 5. Push the builder image to update the cache
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/dailycrispme:builder']
+  id: 'push-builder'
+  waitFor: ['build-builder']
+
+# 6. Push the final image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/dailycrispme:latest']
+  id: 'push-final'
+  waitFor: ['build-final']
+
+# 7. Deploy to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
   args:
@@ -15,12 +56,14 @@ steps:
     - 'deploy'
     - 'dailycrispme'
     - '--image'
-    - 'gcr.io/$PROJECT_ID/dailycrispme'
+    - 'gcr.io/$PROJECT_ID/dailycrispme:latest'
     - '--region'
-    - 'us-central1' # Change to your desired region
+    - 'us-central1'
     - '--platform'
     - 'managed'
     - '--allow-unauthenticated'
+  id: 'deploy-run'
+  waitFor: ['push-final']
 
 options:
   defaultLogsBucketBehavior: 'REGIONAL_USER_OWNED_BUCKET'
