@@ -1,8 +1,0 @@
-com/example/dailycrispme/model/Author.class
-com/example/dailycrispme/controller/ArticleController.class
-com/example/dailycrispme/config/CacheConfig.class
-com/example/dailycrispme/model/Article.class
-com/example/dailycrispme/DailyCrispMeApplication.class
-com/example/dailycrispme/service/InMemoryArticleService.class
-com/example/dailycrispme/config/DataInitializer.class
-com/example/dailycrispme/service/ArticleService.class
