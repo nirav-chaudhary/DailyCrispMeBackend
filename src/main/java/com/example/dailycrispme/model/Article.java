@@ -1,4 +1,4 @@
-package com.example.dailycrispme;
+package com.example.dailycrispme.model;
 
 public record Article(
         String id,

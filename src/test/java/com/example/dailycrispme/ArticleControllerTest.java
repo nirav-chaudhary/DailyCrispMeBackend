@@ -22,7 +22,7 @@ class ArticleControllerTest {
     void getAllArticles() throws Exception {
         mockMvc.perform(get("/articles"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)));
+                .andExpect(jsonPath("$", hasSize(4)));
     }
 
     @Test

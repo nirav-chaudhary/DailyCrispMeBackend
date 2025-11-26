@@ -1,4 +1,4 @@
-package com.example.dailycrispme;
+package com.example.dailycrispme.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.cache.CacheManager;

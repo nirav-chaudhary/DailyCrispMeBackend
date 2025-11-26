@@ -1,6 +1,8 @@
-package com.example.dailycrispme;
+package com.example.dailycrispme.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.dailycrispme.model.Article;
+import com.example.dailycrispme.service.ArticleService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,11 +20,13 @@ public class ArticleController {
 
     @GetMapping("/articles")
     public List<Article> getAllArticles() {
-        return articleService.getAllArticles();
+        return articleService.findAll();
     }
 
     @GetMapping("/articles/{slug}")
-    public Article getArticleBySlug(@PathVariable String slug) {
-        return articleService.getArticleBySlug(slug);
+    public ResponseEntity<Article> getArticleBySlug(@PathVariable String slug) {
+        return articleService.findBySlug(slug)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
