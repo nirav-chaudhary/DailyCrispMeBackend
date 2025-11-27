@@ -17,6 +17,7 @@ public class CORSConfig {
                         .allowedOriginPatterns(
                                 "https://*.daily-crisp-me.pages.dev", // Your Pages domain
                                 "https://www.dailycrisp.me",        // Your custom domain (if applicable)
+                                "https://dailycrisp.me",        // Your custom domain (if applicable)
                                 "http://localhost:3000"             // For local development
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
