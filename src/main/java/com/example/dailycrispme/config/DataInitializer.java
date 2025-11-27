@@ -28,10 +28,10 @@ public class DataInitializer implements CommandLineRunner {
                 Category design = new Category(5L, "Design", "#FF9800");
 
                 // Authors
-                Author janeSmith = new Author("Jane Smith", "https://cdn.dailycrisp.me/avatars/jane.jpg");
-                Author johnDoe = new Author("John Doe", "https://cdn.dailycrisp.me/avatars/john.jpg");
-                Author peterJones = new Author("Peter Jones", "https://cdn.dailycrisp.me/avatars/peter.jpg");
-                Author sarahChen = new Author("Sarah Chen", "https://cdn.dailycrisp.me/avatars/sarah.jpg");
+                Author janeSmith = new Author("Jane Smith", "https://cdn.dailycrisp.me/jane.jpg");
+                Author johnDoe = new Author("John Doe", "https://cdn.dailycrisp.me/john.jpg");
+                Author peterJones = new Author("Peter Jones", "https://cdn.dailycrisp.me/peter.jpg");
+                Author sarahChen = new Author("Sarah Chen", "https://cdn.dailycrisp.me/sarah.jpg");
 
                 // Articles
                 Article article1 = new Article(
@@ -68,8 +68,8 @@ public class DataInitializer implements CommandLineRunner {
                                                 "<h2>The Future Outlook</h2>\n" +
                                                 "<p>As the technology matures, we can expect to see widespread adoption across various sectors. However, challenges such as scalability, energy consumption, and regulatory uncertainty remain. Overcoming these hurdles will be key to unlocking blockchain's full potential.</p>",
                                 "2023-10-24T10:00:00Z",
-                                "https://cdn.dailycrisp.me/images/ai_impact.png",
-                                "https://cdn.dailycrisp.me/images/ai_impact.png",
+                                "https://cdn.dailycrisp.me/ai_impact.png",
+                                "https://cdn.dailycrisp.me/ai_impact.png",
                                 janeSmith);
                 articleService.addArticle(article1);
 
@@ -82,8 +82,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "Exploring the benefits and challenges of serverless...",
                                 "<p>Full HTML content...</p>",
                                 "1 day ago",
-                                "https://cdn.dailycrisp.me/images/ai_impact.png",
-                                "https://cdn.dailycrisp.me/images/ai_impact.png",
+                                "https://cdn.dailycrisp.me/ai_impact.png",
+                                "https://cdn.dailycrisp.me/ai_impact.png",
                                 johnDoe);
                 articleService.addArticle(article2);
 
@@ -96,8 +96,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "Innovations in creating eco-friendly urban spaces...",
                                 "<p>Full HTML content...</p>",
                                 "4 days ago",
-                                "https://cdn.dailycrisp.me/images/ai_impact.png",
-                                "https://cdn.dailycrisp.me/images/ai_impact.png",
+                                "https://cdn.dailycrisp.me/ai_impact.png",
+                                "https://cdn.dailycrisp.me/ai_impact.png",
                                 peterJones);
                 articleService.addArticle(article3);
 
@@ -110,8 +110,8 @@ public class DataInitializer implements CommandLineRunner {
                                 "How artificial intelligence is reshaping...",
                                 "<p>Full HTML content...</p>",
                                 "2 hours ago",
-                                "https://cdn.dailycrisp.me/images/ai_impact.png",
-                                "https://cdn.dailycrisp.me/images/ai_impact.png",
+                                "https://cdn.dailycrisp.me/ai_impact.png",
+                                "https://cdn.dailycrisp.me/ai_impact.png",
                                 sarahChen);
                 articleService.addArticle(article4);
         }
