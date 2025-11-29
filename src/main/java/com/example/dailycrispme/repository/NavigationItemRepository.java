@@ -6,7 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import java.util.UUID;
+
 @Repository
-public interface NavigationItemRepository extends JpaRepository<NavigationItemEntity, Long> {
+public interface NavigationItemRepository extends JpaRepository<NavigationItemEntity, UUID> {
     List<NavigationItemEntity> findAllByOrderByDisplayOrderAsc();
 }

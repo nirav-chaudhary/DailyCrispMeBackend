@@ -54,6 +54,7 @@ public class JpaArticleService implements ArticleService {
                 entity.getCategory().getColor());
 
         Author author = new Author(
+                entity.getAuthor().getId(),
                 entity.getAuthor().getName(),
                 entity.getAuthor().getAvatarUrl());
 

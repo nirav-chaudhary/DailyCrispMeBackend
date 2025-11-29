@@ -1,13 +1,14 @@
 package com.example.dailycrispme.entity;
 
 import jakarta.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "navigation_items")
 public class NavigationItemEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String label;
     private String slug;
@@ -18,11 +19,11 @@ public class NavigationItemEntity {
     public NavigationItemEntity() {
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

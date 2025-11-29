@@ -1,4 +1,6 @@
 package com.example.dailycrispme.model;
 
-public record NavigationItem(Long id, String label, String slug) {
+import java.util.UUID;
+
+public record NavigationItem(UUID id, String label, String slug) {
 }

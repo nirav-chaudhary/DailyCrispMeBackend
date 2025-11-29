@@ -35,15 +35,19 @@ public class HomeController {
                                 .map(item -> new NavigationItem(item.getId(), item.getLabel(), item.getSlug()))
                                 .collect(Collectors.toList());
 
-                // Hero Article (First one for now)
+                // Hero Article
                 Article heroArticle = allArticles.stream()
-                                .filter(a -> "101".equals(a.id()))
+                                .filter(a -> java.util.UUID.fromString("10100000-0000-0000-0000-000000000101")
+                                                .equals(a.id()))
                                 .findFirst()
                                 .orElse(allArticles.isEmpty() ? null : allArticles.get(0));
 
-                // Top Stories (Next two)
+                // Top Stories
                 List<TopStoryDto> topStories = allArticles.stream()
-                                .filter(a -> "102".equals(a.id()) || "103".equals(a.id()))
+                                .filter(a -> java.util.UUID.fromString("10200000-0000-0000-0000-000000000102")
+                                                .equals(a.id()) ||
+                                                java.util.UUID.fromString("10300000-0000-0000-0000-000000000103")
+                                                                .equals(a.id()))
                                 .map(a -> new TopStoryDto(
                                                 a.id(),
                                                 a.title(),

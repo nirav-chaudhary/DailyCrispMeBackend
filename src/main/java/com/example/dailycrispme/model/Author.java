@@ -1,4 +1,6 @@
 package com.example.dailycrispme.model;
 
-public record Author(String name, String avatar) {
+import java.util.UUID;
+
+public record Author(UUID id, String name, String avatar) {
 }

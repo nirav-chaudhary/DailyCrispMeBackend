@@ -1,13 +1,14 @@
 package com.example.dailycrispme.entity;
 
 import jakarta.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "authors")
 public class AuthorEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String name;
 
@@ -17,17 +18,17 @@ public class AuthorEntity {
     public AuthorEntity() {
     }
 
-    public AuthorEntity(Long id, String name, String avatarUrl) {
+    public AuthorEntity(UUID id, String name, String avatarUrl) {
         this.id = id;
         this.name = name;
         this.avatarUrl = avatarUrl;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
