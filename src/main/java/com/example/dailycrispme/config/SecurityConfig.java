@@ -37,7 +37,14 @@ public class SecurityConfig {
                                 new org.springframework.security.web.authentication.HttpStatusEntryPoint(
                                         org.springframework.http.HttpStatus.UNAUTHORIZED)))
                 .oauth2Login(oauth2 -> oauth2
-                        .successHandler(successHandler()));
+                        .successHandler(successHandler()))
+                .logout(logout -> logout
+                        .logoutUrl("/api/v1/logout")
+                        .logoutSuccessHandler(
+                                (request, response, authentication) -> response.setStatus(HttpServletResponse.SC_OK))
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll());
 
         return http.build();
     }
