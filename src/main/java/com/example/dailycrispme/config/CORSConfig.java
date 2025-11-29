@@ -14,9 +14,10 @@ public class CORSConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Apply to all endpoints
-                        .allowedOrigins(
-                                "https://daily-crisp-me.pages.dev", // Your Pages domain
+                        .allowedOriginPatterns(
+                                "https://*.daily-crisp-me.pages.dev", // Your Pages domain
                                 "https://www.dailycrisp.me",        // Your custom domain (if applicable)
+                                "https://dailycrisp.me",        // Your custom domain (if applicable)
                                 "http://localhost:3000"             // For local development
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")

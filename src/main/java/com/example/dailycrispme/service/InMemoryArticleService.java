@@ -30,6 +30,18 @@ public class InMemoryArticleService implements ArticleService {
     }
 
     @Override
+    public List<Article> findAll(int page, int limit) {
+        logger.info("Fetching articles page {} with limit {}", page, limit);
+        List<Article> allArticles = new ArrayList<>(articles.values());
+        int start = (page - 1) * limit;
+        if (start >= allArticles.size()) {
+            return new ArrayList<>();
+        }
+        int end = Math.min(start + limit, allArticles.size());
+        return allArticles.subList(start, end);
+    }
+
+    @Override
     @Cacheable(value = "article", key = "#slug")
     public Optional<Article> findBySlug(String slug) {
         logger.info("Fetching article with slug: {} from service", slug);
