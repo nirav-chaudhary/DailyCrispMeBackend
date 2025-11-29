@@ -92,4 +92,12 @@ public class SecurityConfig {
             response.sendRedirect(frontendUrl);
         };
     }
+
+    @Bean
+    public org.springframework.session.web.http.CookieSerializer cookieSerializer() {
+        org.springframework.session.web.http.DefaultCookieSerializer serializer = new org.springframework.session.web.http.DefaultCookieSerializer();
+        serializer.setSameSite("None");
+        serializer.setUseSecureCookie(true);
+        return serializer;
+    }
 }
