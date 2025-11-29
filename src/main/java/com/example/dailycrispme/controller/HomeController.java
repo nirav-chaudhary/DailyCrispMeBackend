@@ -17,47 +17,54 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1")
 public class HomeController {
 
-    private final ArticleService articleService;
+        private final ArticleService articleService;
+        private final com.example.dailycrispme.repository.NavigationItemRepository navigationItemRepository;
 
-    public HomeController(ArticleService articleService) {
-        this.articleService = articleService;
-    }
+        public HomeController(ArticleService articleService,
+                        com.example.dailycrispme.repository.NavigationItemRepository navigationItemRepository) {
+                this.articleService = articleService;
+                this.navigationItemRepository = navigationItemRepository;
+        }
 
-    @GetMapping("/home")
-    public ResponseEntity<HomeResponse> getHomeData() {
-        List<Article> allArticles = articleService.findAll();
+        @GetMapping("/home")
+        // @org.springframework.cache.annotation.Cacheable("home")
+        public ResponseEntity<HomeResponse> getHomeData() {
+                List<Article> allArticles = articleService.findAll();
 
-        // Dummy Navigation
-        List<NavigationItem> navigation = List.of(
-                new NavigationItem(1L, "News", "news"),
-                new NavigationItem(2L, "Tech", "tech"),
-                new NavigationItem(3L, "Finance", "finance"));
+                // Navigation from DB
+                List<NavigationItem> navigation = navigationItemRepository.findAllByOrderByDisplayOrderAsc().stream()
+                                .map(item -> new NavigationItem(item.getId(), item.getLabel(), item.getSlug()))
+                                .collect(Collectors.toList());
 
-        // Hero Article (First one for now)
-        Article heroArticle = allArticles.stream()
-                .filter(a -> "101".equals(a.id()))
-                .findFirst()
-                .orElse(allArticles.isEmpty() ? null : allArticles.get(0));
+                // Hero Article
+                Article heroArticle = allArticles.stream()
+                                .filter(a -> java.util.UUID.fromString("10100000-0000-0000-0000-000000000101")
+                                                .equals(a.id()))
+                                .findFirst()
+                                .orElse(allArticles.isEmpty() ? null : allArticles.get(0));
 
-        // Top Stories (Next two)
-        List<TopStoryDto> topStories = allArticles.stream()
-                .filter(a -> "102".equals(a.id()) || "103".equals(a.id()))
-                .map(a -> new TopStoryDto(
-                        a.id(),
-                        a.title(),
-                        a.category().name(), // Mapping Category object to String name
-                        a.thumbnailUrl()))
-                .collect(Collectors.toList());
+                // Top Stories
+                List<TopStoryDto> topStories = allArticles.stream()
+                                .filter(a -> java.util.UUID.fromString("10200000-0000-0000-0000-000000000102")
+                                                .equals(a.id()) ||
+                                                java.util.UUID.fromString("10300000-0000-0000-0000-000000000103")
+                                                                .equals(a.id()))
+                                .map(a -> new TopStoryDto(
+                                                a.id(),
+                                                a.title(),
+                                                a.category().name(), // Mapping Category object to String name
+                                                a.thumbnailUrl()))
+                                .collect(Collectors.toList());
 
-        // Latest News (All for now, or exclude hero/top)
-        List<Article> latestNews = allArticles;
+                // Latest News (All for now, or exclude hero/top)
+                List<Article> latestNews = allArticles;
 
-        HomeResponse response = new HomeResponse(
-                navigation,
-                heroArticle,
-                topStories,
-                latestNews);
+                HomeResponse response = new HomeResponse(
+                                navigation,
+                                heroArticle,
+                                topStories,
+                                latestNews);
 
-        return ResponseEntity.ok(response);
-    }
+                return ResponseEntity.ok(response);
+        }
 }

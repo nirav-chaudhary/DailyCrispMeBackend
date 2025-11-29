@@ -1,4 +1,6 @@
 package com.example.dailycrispme.model;
 
-public record Category(Long id, String name, String color) {
+import java.util.UUID;
+
+public record Category(UUID id, String name, String color) {
 }
