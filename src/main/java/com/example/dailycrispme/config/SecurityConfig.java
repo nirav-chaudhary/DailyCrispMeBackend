@@ -32,6 +32,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/me").authenticated()
                         .anyRequest().permitAll())
+                .exceptionHandling(e -> e
+                        .authenticationEntryPoint(
+                                new org.springframework.security.web.authentication.HttpStatusEntryPoint(
+                                        org.springframework.http.HttpStatus.UNAUTHORIZED)))
                 .oauth2Login(oauth2 -> oauth2
                         .successHandler(successHandler()));
 
@@ -43,6 +47,7 @@ public class SecurityConfig {
         org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
         configuration.setAllowedOriginPatterns(java.util.List.of(
                 "https://*.daily-crisp-me.pages.dev",
+                "https://*.pages.dev",
                 "https://www.dailycrisp.me",
                 "https://dailycrisp.me",
                 "http://localhost:3000"));
