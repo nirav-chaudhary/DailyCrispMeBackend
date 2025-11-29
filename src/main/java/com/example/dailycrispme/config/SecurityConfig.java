@@ -28,6 +28,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/me").authenticated()
                         .anyRequest().permitAll())
@@ -36,6 +37,26 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+    @Bean
+    public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
+        org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
+        configuration.setAllowedOriginPatterns(java.util.List.of(
+                "https://*.daily-crisp-me.pages.dev",
+                "https://www.dailycrisp.me",
+                "https://dailycrisp.me",
+                "http://localhost:3000"));
+        configuration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(java.util.List.of("*"));
+        configuration.setAllowCredentials(true);
+
+        org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
+    @org.springframework.beans.factory.annotation.Value("${app.frontend.url}")
+    private String frontendUrl;
 
     @Bean
     public AuthenticationSuccessHandler successHandler() {
@@ -63,10 +84,6 @@ public class SecurityConfig {
             userRepository.save(user);
 
             // Redirect to frontend
-            String frontendUrl = System.getenv("FRONTEND_URL");
-            if (frontendUrl == null) {
-                frontendUrl = "http://localhost:3000";
-            }
             response.sendRedirect(frontendUrl);
         };
     }

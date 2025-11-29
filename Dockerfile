@@ -28,5 +28,8 @@ COPY --from=build /app/target/dailycrispme-0.0.1-SNAPSHOT.jar .
 # Expose the port the app runs on
 EXPOSE 8080
 
+# Set the active profile to prod
+ENV SPRING_PROFILES_ACTIVE=prod
+
 # Run the application
 CMD ["dailycrispme-0.0.1-SNAPSHOT.jar"]
