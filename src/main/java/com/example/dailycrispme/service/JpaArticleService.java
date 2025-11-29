@@ -5,6 +5,7 @@ import com.example.dailycrispme.model.Article;
 import com.example.dailycrispme.model.Author;
 import com.example.dailycrispme.model.Category;
 import com.example.dailycrispme.repository.ArticleRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,15 +34,30 @@ public class JpaArticleService implements ArticleService {
     }
 
     @Override
+    // @Cacheable("articles")
     public List<Article> findAll(int page, int limit) {
+        return findAll(page, limit, null);
+    }
+
+    @Override
+    // @Cacheable("articles")
+    public List<Article> findAll(int page, int limit, String category) {
         PageRequest pageRequest = PageRequest.of(page - 1, limit, Sort.by("publishedAt").descending());
-        Page<ArticleEntity> articlePage = articleRepository.findAll(pageRequest);
+        Page<ArticleEntity> articlePage;
+
+        if (category != null && !category.isEmpty()) {
+            articlePage = articleRepository.findArticlesByCategorySlug(category, pageRequest);
+        } else {
+            articlePage = articleRepository.findAll(pageRequest);
+        }
+
         return articlePage.stream()
                 .map(this::mapToModel)
                 .collect(Collectors.toList());
     }
 
     @Override
+    // @Cacheable("article")
     public Optional<Article> findBySlug(String slug) {
         return articleRepository.findBySlug(slug)
                 .map(this::mapToModel);

@@ -24,8 +24,9 @@ public class ArticleController {
     @GetMapping("/articles")
     public List<Article> getAllArticles(
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int limit) {
-        return articleService.findAll(page, limit);
+            @RequestParam(defaultValue = "10") int limit,
+            @RequestParam(required = false) String category) {
+        return articleService.findAll(page, limit, category);
     }
 
     @GetMapping("/articles/{slug}")

@@ -27,6 +27,7 @@ public class HomeController {
         }
 
         @GetMapping("/home")
+        // @org.springframework.cache.annotation.Cacheable("home")
         public ResponseEntity<HomeResponse> getHomeData() {
                 List<Article> allArticles = articleService.findAll();
 

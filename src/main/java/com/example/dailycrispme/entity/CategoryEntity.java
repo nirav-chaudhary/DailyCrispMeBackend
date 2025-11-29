@@ -11,14 +11,16 @@ public class CategoryEntity {
     private UUID id;
 
     private String name;
+    private String slug;
     private String color;
 
     public CategoryEntity() {
     }
 
-    public CategoryEntity(UUID id, String name, String color) {
+    public CategoryEntity(UUID id, String name, String slug, String color) {
         this.id = id;
         this.name = name;
+        this.slug = slug;
         this.color = color;
     }
 
@@ -36,6 +38,14 @@ public class CategoryEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     public String getColor() {

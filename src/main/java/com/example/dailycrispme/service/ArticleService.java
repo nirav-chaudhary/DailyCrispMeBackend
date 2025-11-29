@@ -10,5 +10,7 @@ public interface ArticleService {
 
     List<Article> findAll(int page, int limit);
 
+    List<Article> findAll(int page, int limit, String category);
+
     Optional<Article> findBySlug(String slug);
 }
